@@ -1,4 +1,4 @@
-import {db,FS,$} from './common.js?v=3';
+import {db,FS,$} from './common.js?v=4';
 (async()=>{
 const e=new URLSearchParams(location.search).get('e');const ref=FS.doc(db,'events',e||'x');
 const snap=await FS.getDoc(ref).catch(()=>null);
