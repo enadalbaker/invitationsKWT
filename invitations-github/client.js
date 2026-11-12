@@ -4,7 +4,7 @@ const e=new URLSearchParams(location.search).get('e');let ev,G=[],i=0;
 const ref=FS.doc(db,'events',e||'x');
 const snap=await FS.getDoc(ref).catch(()=>null);
 if(!snap||!snap.exists()){document.body.innerHTML='<p style="padding:30px;font-family:Tajawal">الرابط غير صحيح.</p>';return}
-ev=snap.data();$('h').textContent=ev.title||'دعوتك';
+ev=snap.data();if(ev.closed){document.body.innerHTML='<p style="padding:30px;font-family:Tajawal">هذه الفعالية متوقفة.</p>';return}$('h').textContent=ev.title||'دعوتك';
 mount($('card'),ev.tpl);
 const show=()=>{if(i>=G.length)i=Math.max(0,G.length-1);const g=G[i]||{n:'اسم الضيف',c:'DEMO'};fill($('card'),ev,g.n,g.c);$('cnt').textContent=G.length?'الدعوة '+(i+1)+' من '+G.length:'أضف أسماء لتظهر هنا'};
 const list=()=>{$('gc').textContent='('+G.length+')';const b=$('gl');b.innerHTML='';
