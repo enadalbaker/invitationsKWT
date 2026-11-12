@@ -8,7 +8,7 @@ mount($('card'),ev.tpl);
 const show=()=>{if(i>=G.length)i=Math.max(0,G.length-1);const g=G[i]||{n:'اسم الضيف',c:'DEMO'};fill($('card'),ev,g.n,g.c);$('cnt').textContent=G.length?'الدعوة '+(i+1)+' من '+G.length:'أضف أسماء لتظهر هنا'};
 const list=()=>{$('gc').textContent='('+G.length+')';const b=$('gl');b.innerHTML='';
  G.forEach((g,k)=>{const r=document.createElement('div');r.className='row';const s=document.createElement('span');s.textContent=g.n;s.style.cursor='pointer';s.onclick=()=>{i=k;show()};
-  const x=document.createElement('button');x.textContent='حذف';x.onclick=()=>FS.deleteDoc(FS.doc(ref,'guests',g.id));r.append(s,x);b.append(r)})};
+  const x=document.createElement('button');x.textContent='حذف';x.onclick=()=>FS.deleteDoc(FS.doc(ref,'guests',g.id));const ed=document.createElement('button');ed.textContent='تعديل';ed.onclick=()=>{const v=prompt('تعديل الاسم',g.n);if(v&&v.trim()&&v.trim()!==g.n)FS.updateDoc(FS.doc(ref,'guests',g.id),{n:v.trim()})};const bx=document.createElement('span');bx.append(ed,x);r.append(s,bx);b.append(r)})};
 FS.onSnapshot(FS.query(FS.collection(ref,'guests'),FS.orderBy('at')),s=>{G=s.docs.map(d=>({id:d.id,...d.data()}));list();show()});
 $('add').onclick=async()=>{const names=$('ta').value.split('\n').map(s=>s.trim()).filter(Boolean);const t=Date.now();
  await Promise.all(names.map((n,k)=>FS.addDoc(FS.collection(ref,'guests'),{n,c:rand(),at:t+k})));$('ta').value=''};
