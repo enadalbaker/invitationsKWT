@@ -1,8 +1,9 @@
 import {db,FS,$,mount,fill,fit,cap,blob,clean,save,zipAll,rand} from './common.js';
+(async()=>{
 const e=new URLSearchParams(location.search).get('e');let ev,G=[],i=0;
 const ref=FS.doc(db,'events',e||'x');
 const snap=await FS.getDoc(ref).catch(()=>null);
-if(!snap||!snap.exists()){document.body.innerHTML='<p style="padding:30px;font-family:Tajawal">الرابط غير صحيح.</p>';throw 0}
+if(!snap||!snap.exists()){document.body.innerHTML='<p style="padding:30px;font-family:Tajawal">الرابط غير صحيح.</p>';return}
 ev=snap.data();$('h').textContent=ev.title||'دعوتك';
 mount($('card'),ev.tpl);
 const show=()=>{if(i>=G.length)i=Math.max(0,G.length-1);const g=G[i]||{n:'اسم الضيف',c:'DEMO'};fill($('card'),ev,g.n,g.c);$('cnt').textContent=G.length?'الدعوة '+(i+1)+' من '+G.length:'أضف أسماء لتظهر هنا'};
@@ -19,3 +20,4 @@ $('dlAll').onclick=async()=>{if(!G.length){$('st').textContent='أضف أسما�
  const z=await zipAll($('card'),ev,G,n=>b.textContent='جارٍ التصدير '+n+' / '+G.length);
  b.textContent=t;b.disabled=false;i=keep;show();save(z,'invitations.zip')};
 const f=()=>fit($('stage'),$('card'));addEventListener('resize',f);f();
+})();

@@ -1,7 +1,8 @@
 import {db,FS,$} from './common.js';
+(async()=>{
 const e=new URLSearchParams(location.search).get('e');const ref=FS.doc(db,'events',e||'x');
 const snap=await FS.getDoc(ref).catch(()=>null);
-if(!snap||!snap.exists()){document.body.innerHTML='<p style="padding:30px;font-family:Tajawal">الرابط غير صحيح.</p>';throw 0}
+if(!snap||!snap.exists()){document.body.innerHTML='<p style="padding:30px;font-family:Tajawal">الرابط غير صحيح.</p>';return}
 $('h').textContent='ماسح: '+(snap.data().title||'');
 let G=new Map(),S={};
 const fmt=t=>new Date(t).toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'});
@@ -20,3 +21,4 @@ const vid=$('vid'),cv=document.createElement('canvas');let cool=0;
 function tick(){if(vid.readyState===4&&Date.now()>cool){cv.width=480;cv.height=Math.round(480*vid.videoHeight/vid.videoWidth)||360;const x=cv.getContext('2d');x.drawImage(vid,0,0,cv.width,cv.height);
   const r=jsQR(x.getImageData(0,0,cv.width,cv.height).data,cv.width,cv.height);if(r&&r.data){cool=Date.now()+2500;check(r.data)}}requestAnimationFrame(tick)}
 navigator.mediaDevices?.getUserMedia({video:{facingMode:'environment'}}).then(s=>{vid.srcObject=s;vid.play();tick()}).catch(()=>$('cm').textContent='تعذر تشغيل الكاميرا، استخدم الإدخال اليدوي.');
+})();
