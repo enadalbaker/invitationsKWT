@@ -1,4 +1,4 @@
-import {db,FS,$} from './common.js';
+import {db,FS,$} from './common.js?v=3';
 (async()=>{
 const e=new URLSearchParams(location.search).get('e');const ref=FS.doc(db,'events',e||'x');
 const snap=await FS.getDoc(ref).catch(()=>null);
@@ -11,7 +11,7 @@ const stat=()=>{$('ct').textContent='دخل '+Object.keys(S).length+' من '+G.s
  Object.entries(S).sort((a,b)=>b[1].at-a[1].at).slice(0,8).forEach(([k,v])=>{const d=document.createElement('div');d.className='rc';const a=document.createElement('span'),t=document.createElement('span');a.textContent=v.n;t.textContent=fmt(v.at);d.append(a,t);b.append(d)})};
 FS.onSnapshot(FS.collection(ref,'guests'),s=>{G=new Map(s.docs.map(d=>[d.data().c,d.data()]));stat()});
 FS.onSnapshot(FS.collection(ref,'scans'),s=>{S={};s.docs.forEach(d=>S[d.id]=d.data());stat()});
-async function check(raw){const p=String(raw).split('|'),code=(p[0]==='INV'?p[1]:raw).trim().toUpperCase(),g=G.get(code);
+async function check(raw){const m=String(raw).match(/INV\|([A-Za-z0-9]+)/),code=(m?m[1]:String(raw).trim()).toUpperCase(),g=G.get(code);
  if(!g){show('bad','دعوة غير صالحة',code);return}
  const sr=FS.doc(ref,'scans',code);
  try{await FS.setDoc(sr,{n:g.n,at:Date.now()});show('ok','أهلاً '+g.n,'تم تسجيل الدخول')}

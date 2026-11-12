@@ -1,4 +1,4 @@
-import {db,auth,FS,AU,$,TPL,DEF,mount,fill} from './common.js';
+import {db,auth,FS,AU,$,TPL,DEF,mount,fill} from './common.js?v=3';
 const F=['kick','mono','title','names','msg','date','time','place','map'];
 let type='w',tpl='w1',cur=null,tm;
 const val=()=>{const v={type,tpl,name:$('eName').value};F.forEach(k=>v[k]=$('f_'+k).value);return v};

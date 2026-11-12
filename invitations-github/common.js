@@ -20,7 +20,7 @@ export function fill(c,ev,gn,code){
  T('.tp',[ev.time,ev.place].filter(Boolean).join('  •  '));T('.gn',gn);T('.cd','INV '+code);
  const cs=getComputedStyle(c),qd=cs.getPropertyValue('--qd').trim()||'#000',ql=cs.getPropertyValue('--qb').trim()||'#fff';
  const mk=(s,t)=>{const e=q(s);e.innerHTML='';new QRCode(e,{text:t,width:156,height:156,colorDark:qd,colorLight:ql,correctLevel:QRCode.CorrectLevel.M})};
- mk('.q1','INV|'+code+'|'+gn);
+ mk('.q1','INV|'+code);
  q('.q2w').style.display=ev.map?'':'none';if(ev.map)mk('.q2',ev.map);
 }
 export function fit(stage,card){const s=Math.min(1,stage.clientWidth/360);card.style.transform='scale('+s+')';stage.style.height=Math.round(620*s)+'px'}

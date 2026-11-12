@@ -1,4 +1,4 @@
-import {db,FS,$,mount,fill,fit,cap,blob,clean,save,zipAll,rand} from './common.js';
+import {db,FS,$,mount,fill,fit,cap,blob,clean,save,zipAll,rand} from './common.js?v=3';
 (async()=>{
 const e=new URLSearchParams(location.search).get('e');let ev,G=[],i=0;
 const ref=FS.doc(db,'events',e||'x');
